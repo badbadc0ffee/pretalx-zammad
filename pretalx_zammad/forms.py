@@ -1,15 +1,31 @@
-from i18nfield.forms import I18nModelForm
+from django import forms
+from django.utils.translation import gettext_lazy as _
+from hierarkey.forms import HierarkeyForm
 
-from .models import ZammadSettings
 
+class SettingsForm(HierarkeyForm):
+    zammad_url = forms.URLField(
+        label=_("Base URL"),
+        widget=forms.URLInput(attrs={"placeholder": "https://zammad.org/"}),
+        help_text=_("Base URL for Zammad."),
+    )
 
-class ZammadSettingsForm(I18nModelForm):
+    zammad_rest_api_key = forms.CharField(
+        label=_("Access Token"),
+        widget=forms.PasswordInput(
+            attrs={"placeholder": "XXxxXxxxxxXXXXXXXxXxXxxXxxXx_xXXxXxXxXXXxXXxXXxXXXxXxxXXXXXXxxXx"},
+            render_value=True,
+        ),
+        help_text=_("Access token for Zammad API."),
+    )
 
-    def __init__(self, *args, event=None, **kwargs):
-        self.instance, _ = ZammadSettings.objects.get_or_create(event=event)
-        super().__init__(*args, **kwargs, instance=self.instance, locales=event.locales)
+    zammad_group = forms.CharField(
+        label=_("Group"),
+        help_text=_("Zammad group for this event."),
+    )
 
-    class Meta:
-        model = ZammadSettings
-        fields = ("some_setting",)
-        widgets = {}
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        event = kwargs.get("obj")
+        if not event.settings.zammad_group:
+            self.fields["zammad_group"].initial = event.slug
