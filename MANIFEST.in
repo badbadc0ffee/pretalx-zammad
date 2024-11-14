@@ -1,0 +1,6 @@
+recursive-include pretalx_zammad/static *
+recursive-include pretalx_zammad/templates *
+exclude pretalx_zammad/locale/django.pot
+recursive-include pretalx_zammad/locale *
+recursive-include pretalx_zammad *.py
+include Makefile
