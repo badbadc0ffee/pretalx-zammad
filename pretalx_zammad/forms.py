@@ -10,18 +10,20 @@ class SettingsForm(HierarkeyForm):
         help_text=_("Base URL for Zammad."),
     )
 
-    zammad_rest_api_key = forms.CharField(
+    zammad_user = forms.CharField(
+        label=_("User"),
+        help_text=_("Username for Zammad API."),
+    )
+
+    zammad_token = forms.CharField(
         label=_("Access Token"),
         widget=forms.PasswordInput(
-            attrs={"placeholder": "XXxxXxxxxxXXXXXXXxXxXxxXxxXx_xXXxXxXxXXXxXXxXXxXXXxXxxXXXXXXxxXx"},
+            attrs={
+                "placeholder": "XXxxXxxxxxXXXXXXXxXxXxxXxxXx_xXXxXxXxXXXxXXxXXxXXXxXxxXXXXXXxxXx"
+            },
             render_value=True,
         ),
         help_text=_("Access token for Zammad API."),
-    )
-
-    zammad_group = forms.CharField(
-        label=_("Group"),
-        help_text=_("Zammad group for this event."),
     )
 
     def __init__(self, *args, **kwargs):
