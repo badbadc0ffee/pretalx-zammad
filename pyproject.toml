@@ -14,9 +14,18 @@ maintainers = [
 
 dependencies = []
 
+[project.optional-dependencies]
+dev = [
+  "black",
+  "build",
+  "check-manifest",
+  "flake8",
+  "isort",
+]
+
 [project.urls]
-homepage = "https://github.com/florian/pretalx-zammad"
-repository = "https://github.com/florian/pretalx-zammad.git"
+homepage = "https://github.com/badbadc0ffee/pretalx-zammad"
+repository = "https://github.com/badbadc0ffee/pretalx-zammad.git"
 
 [project.entry-points."pretalx.plugin"]
 pretalx_zammad = "pretalx_zammad:PretalxPluginMeta"
