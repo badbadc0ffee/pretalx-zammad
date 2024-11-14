@@ -1,6 +1,4 @@
-
 from django.urls import re_path
-
 from pretalx.event.models.event import SLUG_REGEX
 
 from .views import ZammadSettingsView

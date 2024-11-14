@@ -1,4 +1,3 @@
-
 from i18nfield.forms import I18nModelForm
 
 from .models import ZammadSettings
@@ -12,6 +11,5 @@ class ZammadSettingsForm(I18nModelForm):
 
     class Meta:
         model = ZammadSettings
-        fields = ("some_setting", )
+        fields = ("some_setting",)
         widgets = {}
-

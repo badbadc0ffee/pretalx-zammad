@@ -1,12 +1,10 @@
 import random
+
 from django.dispatch import receiver
 from django.urls import reverse
 from pretalx.orga.signals import nav_event_settings
-from pretalx.submission.signals import (
-    submission_details,
-    submission_link,
-    submission_state_change,
-)
+from pretalx.submission.signals import submission_details
+
 
 @receiver(nav_event_settings)
 def pretalx_zammad_settings(sender, request, **kwargs):
@@ -23,6 +21,7 @@ def pretalx_zammad_settings(sender, request, **kwargs):
             == "plugins:pretalx_zammad:settings",
         }
     ]
+
 
 @receiver(submission_details)
 def pretalx_zammad_submission_details(sender, request, submission, **kwargs):

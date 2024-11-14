@@ -1,8 +1,6 @@
 from django.db import models
 
 
-
-
 class ZammadSettings(models.Model):
     event = models.OneToOneField(
         to="event.Event",
