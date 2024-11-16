@@ -22,6 +22,7 @@ def pretalx_zammad_settings(sender, request, **kwargs):
     ]
 
 
+
 @receiver(html_below_submission_form)
 def pretalx_zammad_html_below_submission_form(sender, request, submission, **kwargs):
     event = sender
