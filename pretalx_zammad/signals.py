@@ -1,7 +1,7 @@
 from django.dispatch import receiver
 from django.urls import reverse
 from pretalx.orga.signals import nav_event_settings
-from pretalx.submission.signals import submission_details
+from pretalx.submission.signals import html_below_submission_form
 from zammad_py import ZammadAPI
 
 
@@ -22,8 +22,8 @@ def pretalx_zammad_settings(sender, request, **kwargs):
     ]
 
 
-@receiver(submission_details)
-def pretalx_zammad_submission_details(sender, request, submission, **kwargs):
+@receiver(html_below_submission_form)
+def pretalx_zammad_html_below_submission_form(sender, request, submission, **kwargs):
     event = sender
     api_url = event.settings.zammad_url + "api/v1/"
     ticket_url = event.settings.zammad_url + "#ticket/zoom/"
