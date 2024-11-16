@@ -28,6 +28,4 @@ class SettingsForm(HierarkeyForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        event = kwargs.get("obj")
-        if not event.settings.zammad_group:
-            self.fields["zammad_group"].initial = event.slug
+
