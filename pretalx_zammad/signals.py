@@ -24,6 +24,8 @@ def pretalx_zammad_settings(sender, request, **kwargs):
 
 @receiver(html_below_submission_form)
 def pretalx_zammad_html_below_submission_form(sender, request, submission, **kwargs):
+    if submission is None:
+        return ""
     event = sender
     api_url = event.settings.zammad_url + "api/v1/"
     ticket_url = event.settings.zammad_url + "#ticket/zoom/"
