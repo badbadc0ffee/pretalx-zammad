@@ -12,7 +12,9 @@ maintainers = [
   {name = "Florian Moesch", email = "florian@moesch.org"},
 ]
 
-dependencies = []
+dependencies = [
+  "zammad-py",
+]
 
 [project.optional-dependencies]
 dev = [
