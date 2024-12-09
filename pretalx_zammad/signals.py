@@ -1,8 +1,11 @@
+from django.contrib import messages
 from django.dispatch import receiver
 from django.urls import reverse
-from pretalx.orga.signals import nav_event_settings
-from pretalx.submission.signals import html_below_submission_form
+from requests.exceptions import ConnectionError
 from zammad_py import ZammadAPI
+
+from pretalx.orga.signals import nav_event_settings
+from pretalx.submission.signals import submission_form_html
 
 
 @receiver(nav_event_settings)
@@ -22,16 +25,19 @@ def pretalx_zammad_settings(sender, request, **kwargs):
     ]
 
 
-@receiver(html_below_submission_form)
+@receiver(submission_form_html)
 def pretalx_zammad_html_below_submission_form(sender, request, submission, **kwargs):
     if submission is None:
-        return ""
+        return None
     try:
-        event = sender
-        api_url = event.settings.zammad_url + "api/v1/"
-        ticket_url = event.settings.zammad_url + "#ticket/zoom/"
-        user = event.settings.zammad_user
-        token = event.settings.zammad_token
+        api_url = sender.settings.zammad_url + "api/v1/"
+        ticket_url = sender.settings.zammad_url + "#ticket/zoom/"
+        user = sender.settings.zammad_user
+        token = sender.settings.zammad_token
+    except Exception:
+        messages.warning(request, "Zammad plugin configuration is incomplete.")
+        return None
+    try:
         client = ZammadAPI(url=api_url, username=user, http_token=token)
         tickets = client.ticket.search(f"tags:{submission.code}")._items
         if len(tickets) == 0:
@@ -57,5 +63,8 @@ def pretalx_zammad_html_below_submission_form(sender, request, submission, **kwa
         result += "</div>"
         result += "</div>"
         return result
+    except ConnectionError:
+        messages.warning(request, "Zammad plugin connection error.")
     except Exception:
-        return ""
+        messages.error(request, "Zammad plugin failure")
+    return None
