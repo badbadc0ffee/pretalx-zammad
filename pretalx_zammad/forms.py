@@ -21,7 +21,6 @@ class SettingsForm(HierarkeyForm):
             attrs={
                 "placeholder": "XXxxXxxxxxXXXXXXXxXxXxxXxxXx_xXXxXxXxXXXxXXxXXxXXXxXxxXXXXXXxxXx"
             },
-            render_value=True,
         ),
         help_text=_("Access token for Zammad API."),
     )
