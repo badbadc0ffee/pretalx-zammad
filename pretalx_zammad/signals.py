@@ -1,11 +1,10 @@
 from django.contrib import messages
 from django.dispatch import receiver
 from django.urls import reverse
-from requests.exceptions import ConnectionError
-from zammad_py import ZammadAPI
-
 from pretalx.orga.signals import nav_event_settings
 from pretalx.submission.signals import submission_form_html
+from requests.exceptions import ConnectionError
+from zammad_py import ZammadAPI
 
 
 @receiver(nav_event_settings)
