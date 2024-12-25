@@ -89,19 +89,23 @@ try:
             tickets = client.ticket.search(f"tags:{submission.code}")._items
             if len(tickets) == 0:
                 return None
-            result = "<h3>Zammad</h3>"
+            result = """
+            <h3>Zammad</h3>
+            <ul class="list-plain">
+            """
             for ticket in tickets:
                 id = ticket["id"]
                 title = ticket["title"]
                 state = ticket["state"]
                 group = ticket["group"]
                 result += f"""
-                <ul class="list-plain">
+                <li>
                     <i class="fa fa-circle-o"></i>
-                    <a href='{ticket_url}{id}'>{id}</a> : {title}
-                    <small class="form-text text-muted">{state} in group {group}</small>
-                </ul>
+                    <a href='{ticket_url}{id}'>{id}</a> : {title}<br>
+                    <small>{state} in group {group}</small>
+                </li>
                 """
+            result += "</ul>"
             return result
         except ConnectionError:
             messages.warning(request, "Zammad plugin connection error.")
