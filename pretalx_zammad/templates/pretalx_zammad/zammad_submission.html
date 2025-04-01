@@ -1,0 +1,11 @@
+<h3>Zammad</h3>
+<ul class="list-plain">
+    {% for ticket in tickets %}
+        <li>
+            <i class="fa fa-circle-o"></i>
+            <a href='{{ticket_url}}{{ticket.id}}'>{{ticket.id}}</a> : {{ticket.title}}<br>
+            <small>{{ticket.state}} in group {{ticket.group}}</small>
+        </li>
+    {% endfor %}
+</ul>
+</div>

@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.dispatch import receiver
+from django.template import loader
 from django.urls import reverse
 from pretalx.orga.signals import nav_event_settings
 from pretalx.submission.signals import submission_form_html
@@ -41,26 +42,12 @@ def pretalx_zammad_submission_form_html(sender, request, submission, **kwargs):
         tickets = client.ticket.search(f"tags:{submission.code}")._items
         if len(tickets) == 0:
             return None
-        result = ""
-        result += '<div class="form-group row">'
-        result += '<label class="col-md-3 col-form-label">'
-        result += "Zammad"
-        result += "</label>"
-        result += '<div class="col-md-9">'
-        for ticket in tickets:
-            id = ticket["id"]
-            title = ticket["title"]
-            state = ticket["state"]
-            group = ticket["group"]
-            result += '<div class="pt-2">'
-            result += '<i class="fa fa-circle-o"></i> '
-            result += f"<a href='{ticket_url}{id}'>{id}</a> : {title}"
-            result += (
-                f'<small class="form-text text-muted">{state} in group {group}</small>'
-            )
-            result += "</div>"
-        result += "</div>"
-        result += "</div>"
+        template = loader.get_template("pretalx_zammad/zammad_submission_form.html")
+        context = {
+            "tickets": tickets,
+            "ticket_url": ticket_url,
+        }
+        result = template.render(context, None)
         return result
     except ConnectionError:
         messages.warning(request, "Zammad plugin connection error.")
@@ -89,23 +76,12 @@ try:
             tickets = client.ticket.search(f"tags:{submission.code}")._items
             if len(tickets) == 0:
                 return None
-            result = """
-            <h3>Zammad</h3>
-            <ul class="list-plain">
-            """
-            for ticket in tickets:
-                id = ticket["id"]
-                title = ticket["title"]
-                state = ticket["state"]
-                group = ticket["group"]
-                result += f"""
-                <li>
-                    <i class="fa fa-circle-o"></i>
-                    <a href='{ticket_url}{id}'>{id}</a> : {title}<br>
-                    <small>{state} in group {group}</small>
-                </li>
-                """
-            result += "</ul>"
+            template = loader.get_template("pretalx_zammad/zammad_submission.html")
+            context = {
+                "tickets": tickets,
+                "ticket_url": ticket_url,
+            }
+            result = template.render(context, None)
             return result
         except ConnectionError:
             messages.warning(request, "Zammad plugin connection error.")
