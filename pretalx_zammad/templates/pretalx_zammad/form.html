@@ -1,0 +1,32 @@
+<div class="form-group row">
+    <label for="id_track" class="col-md-3 col-form-label">
+        {{ form.instance.group }} Ticket
+    </label>
+    <div class="col-md-9">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    {% if form.instance.state == 'open' %}
+                        <i class="fa fa-circle-o" style="color:hsl(41, 100%, 49%);"></i>
+                    {% elif form.instance.state == 'escalating' %}
+                        <i class="fa fa-circle-o" style="color:hsl(19, 90%, 51%);"></i>
+                    {% elif form.instance.state == 'archived' %}
+                        <i class="fa fa-circle-o" style="color:hsl(19, 90%, 51%);"></i>
+                    {% elif form.instance.state == 'closed' %}
+                        <i class="fa fa-circle-o" style="color:hsl(145, 51%, 45%);"></i>
+                    {% elif form.instance.state == 'published' %}
+                        <i class="fa fa-circle-o" style="color:hsl(145, 51%, 45%);"></i>
+                    {% elif form.instance.state == 'draft' %}
+                        <i class="fa fa-circle-o" style="color:hsl(0, 0%, 74%);"></i>
+                    {% elif form.instance.state == 'pending' %}
+                        <i class="fa fa-circle-o" style="color:hsl(206, 7%, 28%);"></i>
+                    {% else %}
+                        <i class="fa fa-circle-o"></i>
+                    {% endif %}&nbsp;&nbsp;
+                    <a href="{{ form.instance.url }}">{{ form.instance.id }}</a>
+                </span>
+            </div>
+            <input type="text" value="{{ form.instance.title }}" disabled>
+        </div>
+    </div>
+</div>

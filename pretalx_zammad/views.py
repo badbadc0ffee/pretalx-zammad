@@ -23,7 +23,5 @@ class SettingsView(PermissionRequired, FormView):
 
     def form_valid(self, form):
         form.save()
-        messages.success(
-            self.request, _("The pretalx Zammad plugin settings were updated.")
-        )
+        messages.success(self.request, _("The Zammad plugin settings were updated."))
         return super().form_valid(form)

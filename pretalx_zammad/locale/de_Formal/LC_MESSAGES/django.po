@@ -1,0 +1,53 @@
+#: pretalx_zammad/apps.py:15
+msgid ""
+"pretalx plugin for Zammad issue tracker.\n"
+"\n"
+"This plugin allows you to link to tickets in a Zammad issue tracker.\n"
+"\n"
+"The plugin will match the e-mail adresses of speakers and the six digit "
+"speaker and session codes from pretalx with the customer e-mail addresses "
+"and tags in Zammad and show the related Zammad ticket title, ticket state "
+"and ID on the speaker and session pages in the orga interface.\n"
+"\n"
+"To manually link Zammad tickets to speakers or sessions in pretalx, you can "
+"simply add the six digit code of a speaker or a submission to the tags "
+"within Zammad.\n"
+msgstr ""
+"pretalx-Plugin f&uuml;r das Zammad-Issue-Tracking-System.\n"
+"\n"
+"Mit diesem Plugin k&ouml;nnen Tickets im Zammad-Issue-Tracker verlinkt "
+"werden.\n"
+"\n"
+"Das Plugin gleicht die E-Mail-Adressen von Personen sowie die sechsstelligen "
+"Codes zu Personen und Einreichungen aus pretalx mit den Kunden-E-Mail-"
+"Adressen und Tags in Zammad ab. Auf den Seiten f&uuml;r Personen und "
+"Einreichungen im Orga-Interface zeigt es dann den zugeh&ouml;rigen Ticket-"
+"Titel, -Status und die Ticket-ID aus Zammad an.\n"
+"\n"
+"Wenn manuell Zammad-Tickets mit Personen oder Einreichungen in pretalx "
+"verkn&uuml;pft werden sollen, muss dazu nur der sechsstellig Code einer "
+"Person oder einer Einreichung als Tag in Zammad hinzugef&uuml;gt werden.\n"
+
+#: pretalx_zammad/forms.py:11
+msgid "Base URL"
+msgstr "Basis-URL"
+
+#: pretalx_zammad/forms.py:13
+msgid "Base URL for Zammad"
+msgstr "Basis-URL f&uuml;r Zammad"
+
+#: pretalx_zammad/forms.py:18
+msgid "Username for Zammad API"
+msgstr "Benutzername f&uuml;r die Zammad API"
+
+#: pretalx_zammad/forms.py:22
+msgid "Access Token"
+msgstr "Zugangs-Token"
+
+#: pretalx_zammad/forms.py:28
+msgid "Access token for Zammad API"
+msgstr "Zugangs-Token f&uuml;r die Zammad API"
+
+#: pretalx_zammad/views.py:27
+msgid "The Zammad plugin settings were updated."
+msgstr "Die Einstellungen f&uuml;r das Zammad-Plugin wurden aktualisiert."
