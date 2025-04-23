@@ -3,9 +3,12 @@ from django.dispatch import receiver
 from django.template import loader
 from django.urls import reverse
 from pretalx.orga.signals import nav_event_settings
-from pretalx.submission.signals import submission_form_html
+from pretalx.submission.signals import submission_forms
 from requests.exceptions import ConnectionError
 from zammad_py import ZammadAPI
+
+from .forms import ZammadTicketForm
+from .models import ZammadTicket
 
 
 @receiver(nav_event_settings)
@@ -25,10 +28,11 @@ def pretalx_zammad_settings(sender, request, **kwargs):
     ]
 
 
-@receiver(submission_form_html)
-def pretalx_zammad_submission_form_html(sender, request, submission, **kwargs):
+@receiver(submission_forms)
+def pretalx_zammad_submission_forms(sender, request, submission, **kwargs):
+    zammad_tickets = []
     if submission is None:
-        return None
+        return []
     try:
         api_url = sender.settings.zammad_url + "api/v1/"
         ticket_url = sender.settings.zammad_url + "#ticket/zoom/"
@@ -36,24 +40,28 @@ def pretalx_zammad_submission_form_html(sender, request, submission, **kwargs):
         token = sender.settings.zammad_token
     except Exception:
         messages.warning(request, "Zammad plugin configuration is incomplete.")
-        return None
+        return []
     try:
         client = ZammadAPI(url=api_url, username=user, http_token=token)
         tickets = client.ticket.search(f"tags:{submission.code}")._items
         if len(tickets) == 0:
-            return None
-        template = loader.get_template("pretalx_zammad/zammad_submission_form.html")
-        context = {
-            "tickets": tickets,
-            "ticket_url": ticket_url,
-        }
-        result = template.render(context, None)
-        return result
+            return []
+        for ticket in tickets:
+            zammad_ticket = ZammadTicket(id=ticket.get("id"))
+            zammad_ticket.url = ticket_url + str(ticket.get("id"))
+            zammad_ticket.title = ticket.get("title")
+            zammad_ticket.state = ticket.get("state")
+            zammad_ticket.group = ticket.get("group")
+            zammad_tickets.append(zammad_ticket)
     except ConnectionError:
         messages.warning(request, "Zammad plugin connection error.")
     except Exception:
         messages.error(request, "Zammad plugin failure")
-    return None
+
+    forms = []
+    for ticket in zammad_tickets:
+        forms.append(ZammadTicketForm(instance=ticket))
+    return forms
 
 
 try:
@@ -76,7 +84,7 @@ try:
             tickets = client.ticket.search(f"tags:{submission.code}")._items
             if len(tickets) == 0:
                 return None
-            template = loader.get_template("pretalx_zammad/zammad_submission.html")
+            template = loader.get_template("pretalx_zammad/samaware.html")
             context = {
                 "tickets": tickets,
                 "ticket_url": ticket_url,

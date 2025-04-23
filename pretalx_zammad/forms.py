@@ -1,6 +1,9 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from hierarkey.forms import HierarkeyForm
+from pretalx.common.forms.renderers import TabularFormRenderer
+
+from .models import ZammadTicket
 
 
 class SettingsForm(HierarkeyForm):
@@ -27,3 +30,20 @@ class SettingsForm(HierarkeyForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class ZammadRenderer(TabularFormRenderer):
+    form_template_name = "pretalx_zammad/form.html"
+
+
+class ZammadTicketForm(forms.ModelForm):
+    default_renderer = ZammadRenderer
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for fieldname in self.fields:
+            self.fields[fieldname].disabled = True
+
+    class Meta:
+        model = ZammadTicket
+        exclude = ["id"]
