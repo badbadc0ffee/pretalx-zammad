@@ -10,12 +10,12 @@ class SettingsForm(HierarkeyForm):
     zammad_url = forms.URLField(
         label=_("Base URL"),
         widget=forms.URLInput(attrs={"placeholder": "https://zammad.org/"}),
-        help_text=_("Base URL for Zammad."),
+        help_text=_("Base URL for Zammad"),
     )
 
     zammad_user = forms.CharField(
         label=_("User"),
-        help_text=_("Username for Zammad API."),
+        help_text=_("Username for Zammad API"),
     )
 
     zammad_token = forms.CharField(
@@ -25,7 +25,7 @@ class SettingsForm(HierarkeyForm):
                 "placeholder": "XXxxXxxxxxXXXXXXXxXxXxxXxxXx_xXXxXxXxXXXxXXxXXxXXXxXxxXXXXXXxxXx"
             },
         ),
-        help_text=_("Access token for Zammad API."),
+        help_text=_("Access token for Zammad API"),
     )
 
     def __init__(self, *args, **kwargs):
