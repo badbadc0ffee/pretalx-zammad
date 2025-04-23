@@ -2,7 +2,12 @@ pretalx Zammad plugin
 ==========================
 
 This is a plugin for `pretalx`_.
-pretalx plugin for Zammad issue tracker
+
+This plugin allows you to link to tickets in a Zammad issue tracker.
+
+The plugin will match the e-mail adresses of speakers and the six digit speaker and session codes from pretalx with the customer e-mail addresses and tags in Zammad and show the related Zammad ticket title, ticket state and ID on the speaker and session pages in the orga interface.
+
+To manually link Zammad tickets to speakers or sessions in pretalx, you can simply add the six digit code of a speaker or a submission to the tags within Zammad.
 
 Development setup
 -----------------
@@ -39,7 +44,7 @@ You can auto-fix some of these issues by running::
 License
 -------
 
-Copyright 2024 Florian Moesch
+Copyright 2025 Florian Moesch
 
 Released under the terms of the Apache License 2.0
 
