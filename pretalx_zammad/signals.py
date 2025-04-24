@@ -85,7 +85,6 @@ try:
             return None
         try:
             api_url = sender.settings.zammad_url + "api/v1/"
-            ticket_url = sender.settings.zammad_url + "#ticket/zoom/"
             user = sender.settings.zammad_user
             token = sender.settings.zammad_token
         except Exception:
@@ -98,8 +97,8 @@ try:
                 return None
             template = loader.get_template("pretalx_zammad/samaware.html")
             context = {
+                "event": sender,
                 "tickets": tickets,
-                "ticket_url": ticket_url,
             }
             result = template.render(context, None)
             return result
