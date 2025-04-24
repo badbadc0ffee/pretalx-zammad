@@ -1,11 +1,35 @@
 <h3>Zammad</h3>
-<ul class="list-plain">
-    {% for ticket in tickets %}
-        <li>
-            <i class="fa fa-circle-o"></i>
-            <a href='{{ticket_url}}{{ticket.id}}'>{{ticket.id}}</a> : {{ticket.title}}<br>
-            <small>{{ticket.state}} in group {{ticket.group}}</small>
-        </li>
-    {% endfor %}
-</ul>
+{% for ticket in tickets %}
+<div class="form-group row">
+    <label for="id_track" class="col-md-3 col-form-label">
+        {{ ticket.group }} Ticket
+    </label>
+    <div class="col-md-9">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    {% if ticket.state == 'open' %}
+                        <i class="fa fa-circle-o" title="open" style="color:hsl(41, 100%, 49%);"></i>
+                    {% elif ticket.state == 'escalating' %}
+                        <i class="fa fa-circle-o" title="escalating" style="color:hsl(19, 90%, 51%);"></i>
+                    {% elif ticket.state == 'archived' %}
+                        <i class="fa fa-circle-o" title="archived" style="color:hsl(19, 90%, 51%);"></i>
+                    {% elif ticket.state == 'closed' %}
+                        <i class="fa fa-circle-o" title="closed" style="color:hsl(145, 51%, 45%);"></i>
+                    {% elif ticket.state == 'published' %}
+                        <i class="fa fa-circle-o" title="published" style="color:hsl(145, 51%, 45%);"></i>
+                    {% elif ticket.state == 'draft' %}
+                        <i class="fa fa-circle-o" title="draft" style="color:hsl(0, 0%, 74%);"></i>
+                    {% elif ticket.state == 'pending' %}
+                        <i class="fa fa-circle-o" title="pending" style="color:hsl(206, 7%, 28%);"></i>
+                    {% else %}
+                        <i class="fa fa-circle-o"></i>
+                    {% endif %}&nbsp;&nbsp;
+                    <a href="{{ ticket.url }}">{{ ticket.id }}</a>
+                </span>
+            </div>
+            <input type="text" value="{{ ticket.title }}" disabled>
+        </div>
+    </div>
 </div>
+{% endfor %}
